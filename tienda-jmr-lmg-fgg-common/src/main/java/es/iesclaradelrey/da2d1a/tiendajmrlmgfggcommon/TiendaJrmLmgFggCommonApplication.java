@@ -1,4 +1,4 @@
-package es.iesclaradelrey.da2d1a.tiendajmrlmgfgg.tiendajmrlmgfggcommon;
+package es.iesclaradelrey.da2d1a.tiendajmrlmgfggcommon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
