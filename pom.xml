@@ -8,12 +8,12 @@
         <version>4.0.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>es.iesclaradelrey.da2d1a.tienda-jmr-lmg-fgg</groupId>
-    <artifactId>tienda-jmr-lmg-fgg</artifactId>
+    <groupId>es.iesclaradelrey.da2d1a.tienda-jmr-lmg</groupId>
+    <artifactId>tienda-jmr-lmg</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>tienda-jmr-lmg-fgg</name>
-    <description>tienda-jmr-lmg-fgg</description>
+    <name>tienda-jmr-lmg</name>
+    <description>tienda-jmr-lmg</description>
     <url/>
     <licenses>
         <license/>
@@ -32,8 +32,8 @@
     </properties>
     <!--Parte de modulos estructura pom padre -->
     <modules>
-        <module>tienda-jmr-lmg-fgg-common</module>
-        <module>tienda-jmr-lmg-fgg-web</module>
+        <module>tienda-jmr-lmg-common</module>
+        <module>tienda-jmr-lmg-web</module>
     </modules>
 
     <dependencies>
