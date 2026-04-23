@@ -22,7 +22,7 @@ public class CategoriaController {
     // GET /categorias  →  muestra el listado
     @GetMapping
     public String list(Model model) {
-        // Model es como una "mochila" donde metes datos para pasarlos a la vista
+        // Model es donde meto los datos para pasarlos a la vista
         model.addAttribute("categorias", categoriaService.findAll());
         // Devuelve la plantilla templates/categorias/list.html
         return "categorias/list";
