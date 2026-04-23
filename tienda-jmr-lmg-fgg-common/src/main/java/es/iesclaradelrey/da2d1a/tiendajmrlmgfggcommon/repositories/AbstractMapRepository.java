@@ -27,6 +27,7 @@ public abstract class AbstractMapRepository<T, ID> implements IRepository<T, ID>
     @Override
     public T save(T entity) {
         //Guarda o actualiza, llama a getId() que cada subclase implementará
+        //el getId() devuelve (ej: 1L) y el con storage ya se guarda en el HashMap
         storage.put(getId(entity), entity);
         return entity;
     }
