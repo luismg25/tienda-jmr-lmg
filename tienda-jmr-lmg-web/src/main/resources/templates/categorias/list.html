@@ -1,0 +1,15 @@
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Categorías</title>
+</head>
+<body>
+<h1>Categorías</h1>
+<div th:each="cat : ${categorias}">
+    <p th:text="${cat.nombre}"></p>
+    <p th:text="${cat.descripcion}"></p>
+    <p th:text="${cat.imagen}"></p>
+
+</div>
+</body>
+</html>
