@@ -1,4 +1,4 @@
-package es.iesclaradelrey.da2d1a.tiendajmrlmg.tiendajmrlmgweb;
+package es.iesclaradelrey.da2d1a.tiendajmrlmgweb;
 
 import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.entities.Categoria;
 import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.services.CategoriaService;
@@ -18,7 +18,7 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         //cuarzos
-        categoriaService.save( new Categoria(1L, "Cuarzos", "Minerales compuestos de sílice, muy comunes y variados en colores.", "cuarzo.jpg"));
+        categoriaService.save( new Categoria(1L, "Cuarzos", "Minerales compuestos de sílice, muy comunes y variados en colores.", "cuarzos.jpg"));
 
         //   GEMAS PRECIOSAS  Esmeraldas, Rubíes, Zafiros
         categoriaService.save(new Categoria(2L, "Gemas Preciosas", "Piedras de alto valor y pureza para joyería", "gemas.jpg"));
