@@ -1,4 +1,4 @@
-package es.iesclaradelrey.da2d1a.tiendajmrlmg.tiendajmrlmgweb.controllers;
+package es.iesclaradelrey.da2d1a.tiendajmrlmgweb.controllers;
 
 import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.entities.Categoria;
 import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.services.CategoriaService;
@@ -28,16 +28,16 @@ public class CategoriaController {
         return "categorias/list";
     }
 
-    // GET /categorias/2  →  muestra el detalle de la categoría con id=2
+    // GET /categorias/2 : muestra el detalle de la categoría con id=2
     @GetMapping("/{id}")
     public String detail(@PathVariable Long id, Model model) {
         Optional<Categoria> categoria = categoriaService.findById(id);
 
         if (categoria.isEmpty()) {
-            // Si no existe esa categoría, redirige al listado
+            // Si no existe esa categoría te lleva al listado
             return "redirect:/categorias";
         }
-
+        //Devuelve segun id, la categoria unica la pasa a la vista:
         model.addAttribute("categoria", categoria.get());
         return "categorias/detail";
     }

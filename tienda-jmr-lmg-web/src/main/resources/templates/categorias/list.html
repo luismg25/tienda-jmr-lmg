@@ -2,13 +2,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Categorías</title>
+    <!--Hoja de estilos con context path igual que las demas expresiones de variables -->
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
 </head>
 <body>
 <h1>Categorías</h1>
 <div th:each="cat : ${categorias}">
     <p th:text="${cat.nombre}"></p>
     <p th:text="${cat.descripcion}"></p>
-    <p th:text="${cat.imagen}"></p>
+    <img th:if="${cat.imagen != null}"
+         th:src="@{/imagenes/categorias/{img}(img=${cat.imagen})}"
+         th:alt="${cat.nombre}">
+    <!--Si no hay imagen(null) se pondra la que hay por defecto -->
+    <img th:unless="${cat.imagen != null}"
+         th:src="@{/imagenes/categorias/sinImagen.png}"
+         th:alt="SinImagen">
+    <a th:href="@{/categorias/{id}(id=${cat.id})}">Ver detalle</a>
 
 </div>
 </body>

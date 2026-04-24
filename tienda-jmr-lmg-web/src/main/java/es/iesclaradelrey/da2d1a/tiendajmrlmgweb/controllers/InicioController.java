@@ -1,4 +1,4 @@
-package es.iesclaradelrey.da2d1a.tiendajmrlmg.tiendajmrlmgweb.controllers;
+package es.iesclaradelrey.da2d1a.tiendajmrlmgweb.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

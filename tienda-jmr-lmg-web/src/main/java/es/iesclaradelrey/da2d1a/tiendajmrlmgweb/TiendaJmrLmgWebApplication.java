@@ -17,7 +17,7 @@
 //    }
 //
 //}
-package es.iesclaradelrey.da2d1a.tiendajmrlmg.tiendajmrlmgweb;
+package es.iesclaradelrey.da2d1a.tiendajmrlmgweb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
