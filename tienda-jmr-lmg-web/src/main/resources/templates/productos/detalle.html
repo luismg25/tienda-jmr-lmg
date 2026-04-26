@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${producto.nombre})}"><title>Producto?</title></head>
+
+<body class="bg-light">
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container mt-5">
+    <div class="row bg-white p-5 rounded shadow-sm">
+
+        <div class="col-md-5 mb-4">
+            <div class="position-relative">
+                <img th:src="${producto.imagen != null && producto.imagen.startsWith('http') ? producto.imagen :
+                    (producto.imagen != null && !producto.imagen.isEmpty() ? '/imagenes/productos/' + producto.imagen : '/imagenes/no-image.png')}"
+                     class="img-fluid rounded shadow-sm border"
+                     th:alt="${producto.nombre}"
+                     onerror="this.onerror=null; this.src='/imagenes/no-image.png';">
+                <span th:if="${producto.agotado}" class="position-absolute top-0 start-0 m-3 badge bg-danger fs-5">AGOTADO</span>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <h1 class="display-5 fw-bold" th:text="${producto.nombre}">Nombre</h1>
+            <h2 class="text-success mb-4" th:text="${#numbers.formatDecimal(producto.precio, 1, 2) + ' €'}">0.00 €</h2>
+
+            <hr>
+
+            <div class="row mt-4">
+                <div class="col-sm-6">
+                    <p><strong>Procedencia:</strong> <span th:text="${producto.origen ?: 'desconocida'}"></span></p>
+                    <p><strong>Fecha de Ingreso:</strong> <span th:text="${#temporals.format(producto.fechaIngreso, 'dd/MM/yyyy')}"></span></p>
+                </div>
+                <div class="col-sm-6">
+                    <p><strong>Peso:</strong>
+                        <span th:text="${producto.peso != null ? producto.peso + ' g' : 'no disponible'}"></span>
+                    </p>
+                    <p><strong>Dimensiones:</strong>
+                        <span th:if="${producto.ancho != null}"
+                              th:text="${producto.ancho} + ' x ' + ${producto.alto} + ' x ' + ${producto.largo} + ' cm'">
+                        </span>
+                        <span th:unless="${producto.ancho != null}">Dimensiones no disponibles</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h5>Descripción del artículo:</h5>
+                <p class="text-muted" th:text="${producto.descripcion ?: 'No hay descripción disponible para este artículo.'}"></p>
+            </div>
+
+            <div class="mt-5 pt-3 border-top">
+                <button class="btn btn-info btn-lg px-4 me-2" th:disabled="${producto.agotado}">
+                    Añadir al Carrito
+                </button>
+                <a th:href="@{/categorias/{id}(id=${producto.idCategoria})}" class="btn btn-outline-secondary btn-lg px-4">
+                    Volver a la Categoría
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

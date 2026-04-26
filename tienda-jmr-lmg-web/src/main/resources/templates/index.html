@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Página principal</title>
-</head>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Inicio')}"><title>Inicio</title></head>
 <body>
-    <h1>Tienda de minerales</h1>
-    <p>Insertar aquí página web</p>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container mt-5">
+    <div class="p-5 mb-4 bg-light rounded-3 shadow">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Explora el mundo de los Minerales</h1>
+            <p class="col-md-8 fs-4">Desde amatistas místicas hasta fósiles milenarios. Encuentra la pieza perfecta para tu colección.</p>
+            <a th:href="@{/categorias}" class="btn btn-info btn-lg">Ver Categorías</a>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
 </html>

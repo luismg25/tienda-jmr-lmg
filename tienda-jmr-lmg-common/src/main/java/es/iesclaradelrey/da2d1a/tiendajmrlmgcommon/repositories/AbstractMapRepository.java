@@ -37,7 +37,7 @@ public abstract class AbstractMapRepository<T, ID> implements IRepository<T, ID>
         storage.remove(id);
     }
 
-    // méto_do abstracto: cada repositorio concreto sabe cómo obtener su ID
+    // metodo abstracto: cada repositorio concreto sabe cómo obtener su ID
     //Ej: para Categoria será "return categoria.getId()"
     protected abstract ID getId(T entity);
 }

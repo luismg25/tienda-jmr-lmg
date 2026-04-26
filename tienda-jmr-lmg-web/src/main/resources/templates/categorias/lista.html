@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Categorías')}"><title>Lista</title></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container mt-5">
+    <h2 class="border-start border-info border-4 ps-3 mb-4">Nuestros productos</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="cat : ${categorias}">
+            <div class="card h-100 shadow-sm">
+                <img th:src="@{${cat.imagen != null && !cat.imagen.isEmpty() ? '/imagenes/categorias/' + cat.imagen : '/imagenes/no-image.png'}}"
+                     class="card-img-top" style="height: 200px; object-fit: cover;" th:alt="${cat.nombre}">
+                <div class="card-body">
+                    <h5 class="card-title text-info" th:text="${cat.nombre}">Nombre</h5>
+                    <p class="card-text text-muted" th:text="${cat.descripcion}">Descripción</p>
+                    <a th:href="@{/categorias/{id}(id=${cat.id})}" class="btn btn-dark w-100">Ver Categoría</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

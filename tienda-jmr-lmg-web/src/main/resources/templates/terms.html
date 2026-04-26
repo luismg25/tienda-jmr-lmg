@@ -1,39 +1,37 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Condiciones de uso</title>
-    <link th:href="@{/css/styles.css}" rel="stylesheet">
-</head>
+<head th:replace="~{fragments/layout :: head('Condiciones de Uso')}"><title>Condiciones</title></head>
 <body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
 
-<nav>
-    <a th:href="@{/}">Inicio</a>
-    <a th:href="@{/categorias}">Categorías</a>
-    <a href="sobre-nosotros.html">Sobre nosotros</a>
-</nav>
+<div class="container mt-5 py-5">
+    <div class="card p-5 border-0 shadow-sm">
+        <h1 class="text-info">Condiciones de uso</h1>
+        <hr>
 
-<h1>Condiciones de uso</h1>
+        <p class="lead">Toda compra de piedras preciosas y metales raros está sujeta a las leyes internacionales de minería ética.</p>
+        <p>Los envíos de muestras geológicas están protegidos por seguros de transporte de alta seguridad.</p>
 
-<h2>1. Objeto</h2>
-<p>
-    El presente documento regula las condiciones de uso de la tienda online
-    de minerales, propiedad del equipo de desarrollo.
-</p>
+        <h2 class="h4 mt-4">1. Objeto</h2>
+        <p>
+            El presente documento regula las condiciones de uso de la tienda online
+            de minerales, propiedad del equipo de desarrollo.
+        </p>
 
-<h2>2. Uso del sitio</h2>
-<p>
-    El usuario se compromete a hacer un uso adecuado de los contenidos
-    y servicios que se ofrecen a través de este sitio web.
-</p>
+        <h2 class="h4 mt-4">2. Uso del sitio</h2>
+        <p>
+            El usuario se compromete a hacer un uso adecuado de los contenidos
+            y servicios que se ofrecen a través de este sitio web.
+        </p>
 
-<h2>3. Responsabilidad</h2>
-<p>
-    El equipo no se hace responsable de los daños ocasionados por un
-    uso inadecuado del sitio web.
-</p>
+        <h2 class="h4 mt-4">3. Responsabilidad</h2>
+        <p>
+            El equipo no se hace responsable de los daños ocasionados por un
+            uso inadecuado del sitio web.
+        </p>
+    </div>
+</div>
 
-<a th:href="@{/}">← Volver al inicio</a>
-
+<footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
 </html>
