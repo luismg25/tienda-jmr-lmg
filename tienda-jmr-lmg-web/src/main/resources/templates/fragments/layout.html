@@ -5,7 +5,7 @@
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${title} + ' | ' + ${appName}">Tienda</title>
+    <title th:text="${title} + ' - ' + ${appName}">Tienda</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
@@ -29,24 +29,34 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/categorias}">Categorías</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/sobre-nosotros.html}">Sobre Nosotros</a>
-                </li>
             </ul>
         </div>
     </div>
 </nav>
 
 <!-- FRAGMENTO PIÉ -->
-<footer th:fragment="footer" class="bg-dark text-white pt-4 pb-2 mt-5">
+<footer th:fragment="footer" class="bg-dark text-white pt-5 pb-3 mt-5">
     <div class="container text-center">
-        <p class="mb-1">&copy; <span th:text="${anioActual}">2024</span> <span th:text="${appName}">Tienda</span></p>
-        <p class="small text-white">Especialistas en Cuarzos y Gemas de Colección</p>
-        <ul class="list-inline">
-            <li class="list-inline-item">
-                <a th:href="@{/terms}" class="text-info text-decoration-none small">Condiciones de Uso</a>
-            </li>
-        </ul>
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <h5>Geocontrol</h5>
+                <p class="small text-white-50 text-decoration-none">Especialistas en tesoros de la tierra.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Enlaces rápidos</h5>
+                <ul class="list-unstyled">
+                    <li><a th:href="@{/categorias}" class="text-white-50 text-decoration-none">Categorías</a></li>
+                    <li><a th:href="@{/terms}" class="text-white-50 text-decoration-none">Condiciones de Uso</a></li>
+                    <li><a href="/sobre-nosotros.html" class="text-white-50 text-decoration-none">Sobre nosotros</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contacto</h5>
+                <p class="small text-white-50 text-decoration-none">info@geocontrol.com</p>
+            </div>
+        </div>
+        <hr class="bg-secondary">
+        <p class="mb-0">&copy; <span th:text="${anioActual}"/> Geocontrol</p>
     </div>
 </footer>
 
