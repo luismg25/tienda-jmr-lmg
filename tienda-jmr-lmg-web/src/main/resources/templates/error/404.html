@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Página no encontrada')}"><title>Error 404</title></head>
+<body class="bg-light">
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center bg-white p-5 rounded shadow-sm">
+            <h1 class="display-1 fw-bold text-info">404</h1>
+            <h2 class="mb-4">¡Tesoro no encontrado!</h2>
+            <p class="lead text-muted mb-5">
+                Parece que te has adentrado demasiado y te has perdido en la mina.
+                La página que buscas ha sido desplazada por un movimiento tectónico o nunca existió en nuestros registros fósiles.
+                La próxima vez, lleva una linterna.
+            </p>
+            <div class="d-grid gap-2 d-md-block">
+                <a th:href="@{/}" class="btn btn-dark btn-lg px-4 me-md-2">Volver a Inicio</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

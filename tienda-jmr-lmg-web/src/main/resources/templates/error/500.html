@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Error del Sistema')}"><title>Error 500</title></head>
+<body class="bg-light">
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center bg-white p-5 rounded shadow-sm">
+            <h1 class="display-1 fw-bold text-danger">500</h1>
+            <h2 class="mb-4">Inestabilidad Geológica (Fallo del Sistema)</h2>
+            <p class="lead text-muted">
+                Nuestros sismógrafos detectan un error interno. El servidor ha tenido un problema al procesar tu solicitud.
+            </p>
+
+            <div class="alert alert-secondary text-start mt-4 overflow-auto" style="max-height: 200px;">
+                <p class="mb-1"><strong>Detalles del error:</strong></p>
+                <small class="text-monospace" th:text="${message}">Error desconocido</small>
+            </div>
+
+            <div class="mt-5">
+                <p>Por favor, inténtalo de nuevo más tarde o contacta con soporte si el problema persiste.</p>
+                <a th:href="@{/}" class="btn btn-danger btn-lg px-4">Volver a una zona segura</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
