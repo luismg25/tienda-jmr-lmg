@@ -24,13 +24,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Inicio</a>
+                    <a class="nav-link" th:href="@{/}" th:classappend="${currentUri == '/'} ? ' active-nav' : ''">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/categorias}">Categorías</a>
+                    <a class="nav-link" th:href="@{/categorias}" th:classappend="${currentUri == '/categorias'} ? ' active-nav' : ''">Categorías</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/catalogo}">Catálogo</a>
+                    <a class="nav-link" th:href="@{/catalogo}" th:classappend="${currentUri == '/catalogo'} ? ' active-nav' : ''">Catálogo</a>
                 </li>
             </ul>
         </div>

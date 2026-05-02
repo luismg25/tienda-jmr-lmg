@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-
 // Spring escaneará en TODAS las subcarpetas, tanto de web como de common
 @SpringBootApplication(scanBasePackages = "es.iesclaradelrey.da2d1a")
 @EnableJpaRepositories(basePackages = "es.iesclaradelrey.da2d1a")//Busca los repositorios JPA

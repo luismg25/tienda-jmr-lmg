@@ -6,9 +6,7 @@ import java.time.LocalDate;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
-
-    // Establece el nombre de la app en todas las vistas
-    // Se usa en el head y en el footer
+    // Establece el nombre de la app en el head y en el footer
     @ModelAttribute("appName")
     public String appName() {
         return "Geocontrol";
