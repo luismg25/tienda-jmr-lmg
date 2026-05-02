@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
     private final CategoriaRepository categoriaRepository;//Guarda el repositorio

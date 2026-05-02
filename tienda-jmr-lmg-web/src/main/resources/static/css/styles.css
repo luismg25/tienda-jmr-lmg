@@ -1,3 +1,15 @@
-body{
+/* Nav enlace activo */
+.active-nav {
+    color: #0dcaf0 !important;
+    font-weight: 600;
+    text-decoration: underline;
+}
 
+/* Cards del carrusel */
+.product-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12) !important;
 }

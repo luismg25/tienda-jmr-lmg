@@ -5,7 +5,7 @@
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
 <div class="container mt-5 mb-5">
-    <!-- Encabezado de Categoría -->
+    <!-- CABECERA -->
     <div class="row bg-white p-4 rounded shadow-sm mb-5 align-items-center">
         <div class="col-md-3">
             <img th:src="@{${categoria.imagen != null && !categoria.imagen.isEmpty() ? '/imagenes/categorias/' + categoria.imagen : '/imagenes/no-image.png'}}"
@@ -23,88 +23,96 @@
         </div>
     </div>
 
-    <div class="card shadow-sm">
-        <div class="card-header bg-dark text-white">
-            <h3 class="card-title mb-0">Catálogo de la categoría</h3>
-        </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover table-striped align-middle mb-0">
-                    <thead class="table-light">
-                    <tr>
-                        <!-- Ordenar por Nombre -->
-                        <th scope="col" class="ps-4">
-                            <a class="text-dark text-decoration-none d-block"
-                               th:href="@{/categorias/{id}(id=${categoria.id}, sortField='nombre', sortDir=${sortField == 'nombre' and sortDir == 'asc' ? 'desc' : 'asc'})}">
-                                Producto <span th:if="${sortField == 'nombre'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                            </a>
-                        </th>
-                        <!-- Ordenar por Marca -->
-                        <th scope="col">
-                            <a class="text-dark text-decoration-none d-block"
-                               th:href="@{/categorias/{id}(id=${categoria.id}, sortField='marca.nombre', sortDir=${sortField == 'marca.nombre' and sortDir == 'asc' ? 'desc' : 'asc'})}">
-                                Marca <span th:if="${sortField == 'marca.nombre'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                            </a>
-                        </th>
-                        <!-- Ordenar por Categorías (Referencia al nombre de la colección) -->
-                        <th scope="col">
-                            <a class="text-dark text-decoration-none d-block"
-                               th:href="@{/categorias/{id}(id=${categoria.id}, sortField='categorias.nombre', sortDir=${sortField == 'categorias.nombre' and sortDir == 'asc' ? 'desc' : 'asc'})}">
-                                Categorías <span th:if="${sortField == 'categorias.nombre'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                            </a>
-                        </th>
-                        <th scope="col">Origen</th>
-                        <th scope="col">Descuento</th>
-                        <th scope="col">Precio</th>
-                        <!-- Ordenar por Estado (Campo booleano agotado) -->
-                        <th scope="col">
-                            <a class="text-dark text-decoration-none d-block"
-                               th:href="@{/categorias/{id}(id=${categoria.id}, sortField='agotado', sortDir=${sortField == 'agotado' and sortDir == 'asc' ? 'desc' : 'asc'})}">
-                                Estado <span th:if="${sortField == 'agotado'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                            </a>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody class="bg-white">
-                    <tr th:each="p : ${productos}">
-                        <!-- Nombre vinculado a detalle -->
-                        <td class="ps-4 fw-bold">
-                            <a th:href="@{/productos/{id}(id=${p.id})}" th:text="${p.nombre}" class="text-decoration-none text-primary"></a>
-                        </td>
-                        <!-- Marca vinculada a filtro en catálogo -->
-                        <td>
-                            <a th:href="@{/catalogo(marcaId=${p.marca.id})}" th:text="${p.marca.nombre}" class="text-decoration-none"></a>
-                        </td>
-                        <td>
-                            <span th:each="cat, iterStat : ${p.categorias}"
-                                  th:text="${cat.nombre} + ${!iterStat.last ? ', ' : ''}"></span>
-                        </td>
-                        <td th:text="${p.origen ?: 'N/A'}"></td>
-                        <!-- Corrección de Descuento con literales de sustitución -->
-                        <td>
-                            <span th:if="${p.descuento != null and p.descuento > 0}"
-                                  class="badge bg-warning text-dark"
-                                  th:text="|-${p.descuento}%|"></span>
-                            <span th:unless="${p.descuento != null and p.descuento > 0}" class="text-muted">-</span>
-                        </td>
-                        <td class="fw-bold">
-                            <span th:if="${p.descuento != null and p.descuento > 0}">
-                                <small class="text-danger text-decoration-line-through" th:text="${#numbers.formatDecimal(p.precio, 1, 2)} + ' €'"></small><br>
-                                <span class="text-success" th:text="${#numbers.formatDecimal(p.getPrecioFinal(), 1, 2)} + ' €'"></span>
-                            </span>
-                            <span th:unless="${p.descuento != null and p.descuento > 0}" class="text-success" th:text="${#numbers.formatDecimal(p.precio, 1, 2)} + ' €'"></span>
-                        </td>
-                        <td>
-                            <span th:if="${p.agotado}" class="badge bg-danger">Agotado</span>
-                            <span th:unless="${p.agotado}" class="badge bg-success">En Stock</span>
-                        </td>
-                    </tr>
-                    <tr th:if="${#lists.isEmpty(productos)}">
-                        <td colspan="7" class="text-center py-4 text-muted">No hay productos disponibles en esta categoría.</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <!-- PRODUCTOS -->
+    <div class="card shadow-sm border-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col" class="ps-4">
+                        <a class="text-white text-decoration-none d-block" style="cursor: pointer;"
+                           th:href="@{/categorias/{id}(id=${categoria.id}, sortField='nombre', sortDir=${sortField == 'nombre' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                            Producto <span th:if="${sortField == 'nombre'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a class="text-white text-decoration-none d-block" style="cursor: pointer;"
+                           th:href="@{/categorias/{id}(id=${categoria.id}, sortField='marca.nombre', sortDir=${sortField == 'marca.nombre' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                            Marca <span th:if="${sortField == 'marca.nombre'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a class="text-white text-decoration-none d-block" style="cursor: pointer;"
+                           th:href="@{/categorias/{id}(id=${categoria.id}, sortField='categorias.nombre', sortDir=${sortField == 'categorias.nombre' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                            Categorías <span th:if="${sortField == 'categorias.nombre'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a class="text-white text-decoration-none d-block" style="cursor: pointer;"
+                           th:href="@{/categorias/{id}(id=${categoria.id}, sortField='origen', sortDir=${sortField == 'origen' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                            Origen <span th:if="${sortField == 'origen'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a class="text-white text-decoration-none d-block" style="cursor: pointer;"
+                           th:href="@{/categorias/{id}(id=${categoria.id}, sortField='precio', sortDir=${sortField == 'precio' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                            Precio <span th:if="${sortField == 'precio'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a class="text-white text-decoration-none d-block" style="cursor: pointer;"
+                           th:href="@{/categorias/{id}(id=${categoria.id}, sortField='descuento', sortDir=${sortField == 'descuento' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                            Descuento <span th:if="${sortField == 'descuento'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                        </a>
+                    </th>
+                    <th scope="col">
+                        <a class="text-white text-decoration-none d-block" style="cursor: pointer;"
+                           th:href="@{/categorias/{id}(id=${categoria.id}, sortField='agotado', sortDir=${sortField == 'agotado' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                            Estado <span th:if="${sortField == 'agotado'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                        </a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="bg-white">
+                <tr th:each="p : ${productos}">
+                    <td class="ps-4 fw-bold">
+                        <a th:href="@{/productos/{id}(id=${p.id})}" th:text="${p.nombre}"
+                           class="text-primary text-decoration-underline" style="cursor: pointer;"></a>
+                    </td>
+                    <td>
+                        <a th:href="@{/catalogo(marcaId=${p.marca.id})}" th:text="${p.marca.nombre}"
+                           class="text-decoration-none" style="cursor: pointer;"></a>
+                    </td>
+                    <td>
+                        <span th:if="${#lists.isEmpty(p.categorias)}" class="text-muted fst-italic small">Sin categoría</span>
+                        <a th:if="${#lists.size(p.categorias) == 1}" th:href="@{/categorias/{id}(id=${p.categorias[0].id})}"
+                           th:text="${p.categorias[0].nombre}" class="text-decoration-none" style="cursor: pointer;"></a>
+                        <ul th:if="${#lists.size(p.categorias) > 1}" class="mb-0 ps-3 small">
+                            <li th:each="cat : ${p.categorias}">
+                                <a th:href="@{/categorias/{id}(id=${cat.id})}" th:text="${cat.nombre}"
+                                   class="text-decoration-none" style="cursor: pointer;"></a>
+                            </li>
+                        </ul>
+                    </td>
+                    <td th:text="${p.origen ?: 'N/A'}"></td>
+                    <td class="fw-bold">
+                        <span th:if="${p.descuento != null and p.descuento > 0}">
+                            <small class="text-danger text-decoration-line-through" th:text="${#numbers.formatDecimal(p.precio, 1, 2)} + ' €'"></small><br>
+                            <span class="text-success" th:text="${#numbers.formatDecimal(p.getPrecioFinal(), 1, 2)} + ' €'"></span>
+                        </span>
+                        <span th:unless="${p.descuento != null and p.descuento > 0}" class="text-success" th:text="${#numbers.formatDecimal(p.precio, 1, 2)} + ' €'"></span>
+                    </td>
+                    <td>
+                        <span th:if="${p.descuento != null and p.descuento > 0}" class="badge bg-warning text-dark" th:text="|-${p.descuento}%|"></span>
+                        <span th:unless="${p.descuento != null and p.descuento > 0}" class="text-muted">-</span>
+                    </td>
+                    <td>
+                        <span th:if="${p.agotado}" class="badge bg-danger">Agotado</span>
+                        <span th:unless="${p.agotado}" class="badge bg-success">En Stock</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="mt-4">
