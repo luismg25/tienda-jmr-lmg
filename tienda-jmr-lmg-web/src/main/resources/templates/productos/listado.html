@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Catálogo')}"><title>Catálogo</title></head>
+<body class="bg-light">
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container mt-5 mb-5">
+    <h2 class="mb-4 border-start border-primary border-4 ps-3">Catálogo de Productos</h2>
+
+    <!-- SECCIÓN DE FILTROS -->
+    <div class="card shadow-sm mb-4 border-0">
+        <div class="card-body">
+            <form th:action="@{/catalogo}" method="get" class="row g-3 align-items-end">
+                <input type="hidden" name="sortField" th:value="${sortField}">
+                <input type="hidden" name="sortDir" th:value="${sortDir}">
+
+                <div class="col-md-2">
+                    <label for="nombre" class="form-label text-muted small fw-bold">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" th:value="${nombre}" placeholder="Ej. Cuarzo">
+                </div>
+
+                <div class="col-md-2">
+                    <label for="marcaId" class="form-label text-muted small fw-bold">Marca</label>
+                    <select class="form-select" id="marcaId" name="marcaId">
+                        <option value="">Todas</option>
+                        <!-- Iterar marcas desde el modelo (Requiere pasarlo desde el controlador) -->
+                        <option th:each="m : ${marcas}" th:value="${m.id}" th:text="${m.nombre}" th:selected="${m.id == marcaId}"></option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="origen" class="form-label text-muted small fw-bold">Origen</label>
+                    <input type="text" class="form-control" id="origen" name="origen" th:value="${origen}" placeholder="Ej. Brasil">
+                </div>
+
+                <div class="col-md-2">
+                    <label for="minPrecio" class="form-label text-muted small fw-bold">Precio Mín. (€)</label>
+                    <input type="number" step="0.01" class="form-control" id="minPrecio" name="minPrecio" th:value="${minPrecio}">
+                </div>
+
+                <div class="col-md-2">
+                    <label for="maxPrecio" class="form-label text-muted small fw-bold">Precio Máx. (€)</label>
+                    <input type="number" step="0.01" class="form-control" id="maxPrecio" name="maxPrecio" th:value="${maxPrecio}">
+                </div>
+
+                <div class="col-md-2 text-end">
+                    <a th:href="@{/catalogo}" class="btn btn-link btn-sm text-decoration-none mt-1">Limpiar</a>
+                    <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Buscar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TABLA DE RESULTADOS -->
+    <div class="card shadow-sm border-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col"><a class="text-white text-decoration-none d-block" th:href="@{/catalogo(nombre=${nombre}, marcaId=${marcaId}, origen=${origen}, sortField='nombre', sortDir=${sortField == 'nombre' and sortDir == 'asc' ? 'desc' : 'asc'})}">Nombre <span th:if="${sortField == 'nombre'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th scope="col"><a class="text-white text-decoration-none d-block" th:href="@{/catalogo(nombre=${nombre}, marcaId=${marcaId}, origen=${origen}, sortField='marca.nombre', sortDir=${sortField == 'marca.nombre' and sortDir == 'asc' ? 'desc' : 'asc'})}">Marca <span th:if="${sortField == 'marca.nombre'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th scope="col">Categorías</th>
+                    <th scope="col"><a class="text-white text-decoration-none d-block" th:href="@{/catalogo(nombre=${nombre}, marcaId=${marcaId}, origen=${origen}, sortField='origen', sortDir=${sortField == 'origen' and sortDir == 'asc' ? 'desc' : 'asc'})}">Origen <span th:if="${sortField == 'origen'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th scope="col"><a class="text-white text-decoration-none d-block" th:href="@{/catalogo(nombre=${nombre}, marcaId=${marcaId}, origen=${origen}, sortField='descuento', sortDir=${sortField == 'descuento' and sortDir == 'asc' ? 'desc' : 'asc'})}">Descuento <span th:if="${sortField == 'descuento'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th scope="col"><a class="text-white text-decoration-none d-block" th:href="@{/catalogo(nombre=${nombre}, marcaId=${marcaId}, origen=${origen}, sortField='precio', sortDir=${sortField == 'precio' and sortDir == 'asc' ? 'desc' : 'asc'})}">Precio <span th:if="${sortField == 'precio'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span></a></th>
+                    <th scope="col">Estado</th>
+                    <th scope="col" class="text-center">Acciones</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white">
+                <tr th:each="p : ${productos}">
+                    <td class="fw-bold" th:text="${p.nombre}"></td>
+                    <td>
+                        <a th:href="@{/marcas/{id}(id=${p.marca.id})}" th:text="${p.marca.nombre}" class="text-decoration-none"></a>
+                    </td>
+                    <td>
+                        <span th:if="${#lists.isEmpty(p.categorias)}" class="text-muted fst-italic">Sin categoría</span>
+                        <a th:if="${#lists.size(p.categorias) == 1}" th:href="@{/categorias/{id}(id=${p.categorias[0].id})}" th:text="${p.categorias[0].nombre}" class="text-decoration-none"></a>
+                        <ul th:if="${#lists.size(p.categorias) > 1}" class="mb-0 ps-3 small">
+                            <li th:each="cat : ${p.categorias}"><a th:href="@{/categorias/{id}(id=${cat.id})}" th:text="${cat.nombre}" class="text-decoration-none"></a></li>
+                        </ul>
+                    </td>
+                    <td th:text="${p.origen ?: 'N/A'}"></td>
+                    <td>
+                        <span th:if="${p.descuento != null}" class="badge bg-warning text-dark" th:text="'-' + ${p.descuento} + '%'"></span>
+                        <span th:unless="${p.descuento != null}" class="text-muted">-</span>
+                    </td>
+                    <td class="fw-bold">
+                        <span th:if="${p.descuento != null}">
+                            <span class="text-danger text-decoration-line-through small me-1" th:text="${#numbers.formatDecimal(p.precio, 1, 2)} + ' €'"></span>
+                            <br>
+                            <span class="text-success" th:text="${#numbers.formatDecimal(p.getPrecioFinal(), 1, 2)} + ' €'"></span>
+                        </span>
+                        <span th:unless="${p.descuento != null}" class="text-success" th:text="${#numbers.formatDecimal(p.precio, 1, 2)} + ' €'"></span>
+                    </td>
+                    <td>
+                        <span th:if="${p.agotado}" class="badge bg-danger">Agotado</span>
+                        <span th:unless="${p.agotado}" class="badge bg-success">En Stock</span>
+                    </td>
+                    <td class="text-center">
+                        <a th:href="@{/productos/{id}(id=${p.id})}" class="btn btn-sm btn-outline-info">Ver Detalles</a>
+                    </td>
+                </tr>
+                <tr th:if="${productos.isEmpty()}">
+                    <td colspan="8" class="text-center py-4 text-muted">No se encontraron productos.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

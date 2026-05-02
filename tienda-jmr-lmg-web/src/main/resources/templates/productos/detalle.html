@@ -1,45 +1,60 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head(${producto.nombre})}"><title>Producto?</title></head>
-
+<head th:replace="~{fragments/layout :: head(${producto.nombre})}"><title>Producto</title></head>
 <body class="bg-light">
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
 <div class="container mt-5">
     <div class="row bg-white p-5 rounded shadow-sm">
-
         <div class="col-md-5 mb-4">
             <div class="position-relative">
-                <img th:src="${producto.imagen != null && producto.imagen.startsWith('http') ? producto.imagen :
-                    (producto.imagen != null && !producto.imagen.isEmpty() ? '/imagenes/productos/' + producto.imagen : '/imagenes/no-image.png')}"
+                <img th:src="${producto.imagen != null && producto.imagen.startsWith('http') ? producto.imagen : (producto.imagen != null && !producto.imagen.isEmpty() ? '/imagenes/productos/' + producto.imagen : '/imagenes/no-image.png')}"
                      class="img-fluid rounded shadow-sm border"
                      th:alt="${producto.nombre}"
                      onerror="this.onerror=null; this.src='/imagenes/no-image.png';">
                 <span th:if="${producto.agotado}" class="position-absolute top-0 start-0 m-3 badge bg-danger fs-5">AGOTADO</span>
+                <span th:if="${producto.descuento != null}" class="position-absolute top-0 end-0 m-3 badge bg-warning text-dark fs-5" th:text="'-' + ${producto.descuento} + '%'"></span>
             </div>
         </div>
 
         <div class="col-md-7">
+            <div class="mb-2">
+                <span class="text-muted text-uppercase small fw-bold">Marca: </span>
+                <a th:href="@{/marcas/{id}(id=${producto.marca.id})}" th:text="${producto.marca.nombre}" class="text-decoration-none fs-5"></a>
+            </div>
+
             <h1 class="display-5 fw-bold" th:text="${producto.nombre}">Nombre</h1>
-            <h2 class="text-success mb-4" th:text="${#numbers.formatDecimal(producto.precio, 1, 2) + ' €'}">0.00 €</h2>
+
+            <h2 class="mb-4">
+                <span th:if="${producto.descuento != null}">
+                    <span class="text-danger text-decoration-line-through fs-4 me-2" th:text="${#numbers.formatDecimal(producto.precio, 1, 2) + ' €'}"></span>
+                    <span class="text-success fw-bold" th:text="${#numbers.formatDecimal(producto.getPrecioFinal(), 1, 2) + ' €'}"></span>
+                </span>
+                <span th:unless="${producto.descuento != null}" class="text-success fw-bold" th:text="${#numbers.formatDecimal(producto.precio, 1, 2) + ' €'}"></span>
+            </h2>
 
             <hr>
 
             <div class="row mt-4">
                 <div class="col-sm-6">
-                    <p><strong>Procedencia:</strong> <span th:text="${producto.origen ?: 'desconocida'}"></span></p>
+                    <p><strong>Procedencia:</strong> <span th:text="${producto.origen ?: 'N/A'}"></span></p>
                     <p><strong>Fecha de Ingreso:</strong> <span th:text="${#temporals.format(producto.fechaIngreso, 'dd/MM/yyyy')}"></span></p>
+                    <div>
+                        <strong>Categorías:</strong>
+                        <span th:if="${#lists.isEmpty(producto.categorias)}" class="text-muted">Ninguna</span>
+                        <p th:if="${#lists.size(producto.categorias) == 1}" class="mb-0">
+                            <a th:href="@{/categorias/{id}(id=${producto.categorias[0].id})}" th:text="${producto.categorias[0].nombre}"></a>
+                        </p>
+                        <ul th:if="${#lists.size(producto.categorias) > 1}">
+                            <li th:each="cat : ${producto.categorias}">
+                                <a th:href="@{/categorias/{id}(id=${cat.id})}" th:text="${cat.nombre}"></a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-sm-6">
-                    <p><strong>Peso:</strong>
-                        <span th:text="${producto.peso != null ? producto.peso + ' g' : 'no disponible'}"></span>
-                    </p>
-                    <p><strong>Dimensiones:</strong>
-                        <span th:if="${producto.ancho != null}"
-                              th:text="${producto.ancho} + ' x ' + ${producto.alto} + ' x ' + ${producto.largo} + ' cm'">
-                        </span>
-                        <span th:unless="${producto.ancho != null}">Dimensiones no disponibles</span>
-                    </p>
+                    <p><strong>Peso:</strong> <span th:text="${producto.peso != null ? producto.peso + ' g' : 'N/A'}"></span></p>
+                    <p><strong>Dimensiones:</strong> <span th:text="${producto.dimensiones != null ? producto.dimensiones + ' cm' : 'N/A'}"></span></p>
                 </div>
             </div>
 
@@ -49,17 +64,12 @@
             </div>
 
             <div class="mt-5 pt-3 border-top">
-                <button class="btn btn-info btn-lg px-4 me-2" th:disabled="${producto.agotado}">
-                    Añadir al Carrito
-                </button>
-                <a th:href="@{/categorias/{id}(id=${producto.idCategoria})}" class="btn btn-outline-secondary btn-lg px-4">
-                    Volver a la Categoría
-                </a>
+                <button class="btn btn-info btn-lg px-4 me-2" th:disabled="${producto.agotado}">Añadir al Carrito</button>
+                <a href="javascript:history.back()" class="btn btn-outline-secondary btn-lg px-4">Volver Atrás</a>
             </div>
         </div>
     </div>
 </div>
-
 <footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
 </html>

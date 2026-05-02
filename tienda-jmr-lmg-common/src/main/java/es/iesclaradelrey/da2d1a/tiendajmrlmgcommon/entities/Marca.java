@@ -12,23 +12,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "categorias")
-public class Categoria {
+@Table(name = "marcas")
+public class Marca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String nombre;
 
-    @Column(length = 2000)
-    private String descripcion;
-
-    @Column(length = 500)
-    private String imagen;
-
-    @ManyToMany(mappedBy = "categorias")
-    @ToString.Exclude // Evita StackOverflow al hacer sysout
+    @OneToMany(mappedBy = "marca")
+    @ToString.Exclude // Evita recursividad infinita en logs
     private List<Producto> productos = new ArrayList<>();
 }
-

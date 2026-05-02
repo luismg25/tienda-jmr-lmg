@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head(${categoria.nombre})}"><title>Categoría?</title></head>
+<head th:replace="~{fragments/layout :: head(${categoria.nombre})}"><title>Categoría</title></head>
 <body class="bg-light">
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
+    <!-- Encabezado de Categoría -->
     <div class="row bg-white p-4 rounded shadow-sm mb-5 align-items-center">
         <div class="col-md-3">
             <img th:src="@{${categoria.imagen != null && !categoria.imagen.isEmpty() ? '/imagenes/categorias/' + categoria.imagen : '/imagenes/no-image.png'}}"
                  class="img-fluid rounded border" th:alt="${categoria.nombre}">
         </div>
         <div class="col-md-9">
-            <h1 class="display-4 text-dark" th:text="${categoria.nombre}">Nombre de Categoría</h1>
-            <p class="lead text-muted" th:text="${categoria.descripcion}">Descripción de la categoría.</p>
+            <h1 class="display-4 text-dark" th:text="${categoria.nombre}">Nombre</h1>
+            <p class="lead text-muted" th:text="${categoria.descripcion}">Descripción</p>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a th:href="@{/categorias}">Categorías</a></li>
@@ -24,47 +25,92 @@
 
     <div class="card shadow-sm">
         <div class="card-header bg-dark text-white">
-            <h3 class="card-title mb-0">Catálogo de Productos</h3>
+            <h3 class="card-title mb-0">Catálogo de la categoría</h3>
         </div>
         <div class="card-body p-0">
-            <table class="table table-hover mb-0 align-middle">
-                <thead class="table-light">
-                <tr>
-                    <th class="ps-4">Nombre</th>
-                    <th>Origen</th>
-                    <th>Precio</th>
-                    <th>Estado</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="p : ${productos}">
-                    <td class="ps-4 fw-bold" th:text="${p.nombre}">Nombre del Producto</td>
-                    <td th:text="${p.origen ?: 'N/A'}">Origen</td>
-                    <td th:text="${#numbers.formatDecimal(p.precio, 1, 2) + ' €'}">0.00 €</td>
-                    <td>
-                        <span th:if="${p.agotado}" class="badge bg-danger">Agotado</span>
-                        <span th:unless="${p.agotado}" class="badge bg-success">En Stock</span>
-                    </td>
-                    <td class="text-center">
-                        <a th:href="@{/productos/{id}(id=${p.id})}" class="btn btn-sm btn-outline-info">
-                            Ver Detalles
-                        </a>
-                    </td>
-                </tr>
-                <tr th:if="${#lists.isEmpty(productos)}">
-                    <td colspan="5" class="text-center py-4 text-muted">No hay productos disponibles en esta categoría actualmente.</td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0">
+                    <thead class="table-light">
+                    <tr>
+                        <!-- Ordenar por Nombre -->
+                        <th scope="col" class="ps-4">
+                            <a class="text-dark text-decoration-none d-block"
+                               th:href="@{/categorias/{id}(id=${categoria.id}, sortField='nombre', sortDir=${sortField == 'nombre' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                                Producto <span th:if="${sortField == 'nombre'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                            </a>
+                        </th>
+                        <!-- Ordenar por Marca -->
+                        <th scope="col">
+                            <a class="text-dark text-decoration-none d-block"
+                               th:href="@{/categorias/{id}(id=${categoria.id}, sortField='marca.nombre', sortDir=${sortField == 'marca.nombre' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                                Marca <span th:if="${sortField == 'marca.nombre'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                            </a>
+                        </th>
+                        <!-- Ordenar por Categorías (Referencia al nombre de la colección) -->
+                        <th scope="col">
+                            <a class="text-dark text-decoration-none d-block"
+                               th:href="@{/categorias/{id}(id=${categoria.id}, sortField='categorias.nombre', sortDir=${sortField == 'categorias.nombre' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                                Categorías <span th:if="${sortField == 'categorias.nombre'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                            </a>
+                        </th>
+                        <th scope="col">Origen</th>
+                        <th scope="col">Descuento</th>
+                        <th scope="col">Precio</th>
+                        <!-- Ordenar por Estado (Campo booleano agotado) -->
+                        <th scope="col">
+                            <a class="text-dark text-decoration-none d-block"
+                               th:href="@{/categorias/{id}(id=${categoria.id}, sortField='agotado', sortDir=${sortField == 'agotado' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+                                Estado <span th:if="${sortField == 'agotado'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+                            </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                    <tr th:each="p : ${productos}">
+                        <!-- Nombre vinculado a detalle -->
+                        <td class="ps-4 fw-bold">
+                            <a th:href="@{/productos/{id}(id=${p.id})}" th:text="${p.nombre}" class="text-decoration-none text-primary"></a>
+                        </td>
+                        <!-- Marca vinculada a filtro en catálogo -->
+                        <td>
+                            <a th:href="@{/catalogo(marcaId=${p.marca.id})}" th:text="${p.marca.nombre}" class="text-decoration-none"></a>
+                        </td>
+                        <td>
+                            <span th:each="cat, iterStat : ${p.categorias}"
+                                  th:text="${cat.nombre} + ${!iterStat.last ? ', ' : ''}"></span>
+                        </td>
+                        <td th:text="${p.origen ?: 'N/A'}"></td>
+                        <!-- Corrección de Descuento con literales de sustitución -->
+                        <td>
+                            <span th:if="${p.descuento != null and p.descuento > 0}"
+                                  class="badge bg-warning text-dark"
+                                  th:text="|-${p.descuento}%|"></span>
+                            <span th:unless="${p.descuento != null and p.descuento > 0}" class="text-muted">-</span>
+                        </td>
+                        <td class="fw-bold">
+                            <span th:if="${p.descuento != null and p.descuento > 0}">
+                                <small class="text-danger text-decoration-line-through" th:text="${#numbers.formatDecimal(p.precio, 1, 2)} + ' €'"></small><br>
+                                <span class="text-success" th:text="${#numbers.formatDecimal(p.getPrecioFinal(), 1, 2)} + ' €'"></span>
+                            </span>
+                            <span th:unless="${p.descuento != null and p.descuento > 0}" class="text-success" th:text="${#numbers.formatDecimal(p.precio, 1, 2)} + ' €'"></span>
+                        </td>
+                        <td>
+                            <span th:if="${p.agotado}" class="badge bg-danger">Agotado</span>
+                            <span th:unless="${p.agotado}" class="badge bg-success">En Stock</span>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(productos)}">
+                        <td colspan="7" class="text-center py-4 text-muted">No hay productos disponibles en esta categoría.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
     <div class="mt-4">
         <a th:href="@{/categorias}" class="btn btn-secondary">← Volver al listado general</a>
     </div>
 </div>
-
 <footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
 </html>
