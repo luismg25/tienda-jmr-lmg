@@ -9,4 +9,5 @@ public interface ProductoService {
     List<Producto> buscarConFiltros(String nombre, Long marcaId, String origen, Double minPrecio, Double maxPrecio, String sortField, String sortDir);
     Optional<Producto> findById(Long id);
     Producto save(Producto producto);
+    void deleteById(Long id);
 }

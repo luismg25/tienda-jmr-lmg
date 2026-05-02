@@ -31,6 +31,9 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
+    public void deleteById(Long id) { productoRepository.deleteById(id); }
+
+    @Override
     public List<Producto> findByCategoria(long id, String sortField, String sortDir) {
         Specification<Producto> spec = (root, query, cb) -> {
             applyOrder(root, query, cb, sortField, sortDir);

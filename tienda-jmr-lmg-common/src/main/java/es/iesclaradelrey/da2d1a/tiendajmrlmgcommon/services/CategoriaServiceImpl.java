@@ -18,7 +18,6 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public List<Categoria> findAll() {
         return categoriaRepository.findAll();
-        //El servicio aqui pregunta al repositorio
     }
 
     @Override
@@ -30,4 +29,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     public Categoria save(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
+
+    @Override
+    public void deleteById(Long id) { categoriaRepository.deleteById(id); }
 }

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<!-- FRAGMENTO CABECERA -->
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' · Admin - ' + ${appName}">Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- FRAGMENTO NAVEGACIÓN -->
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-secondary shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" th:href="@{/admin}">
+            <i class="bi bi-shield-lock me-1"></i>
+            <span th:text="${appName}">Tienda</span>
+            <span class="badge bg-warning text-dark ms-1 small">Admin</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="adminNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:href="@{/admin/marcas}"
+                       th:classappend="${currentUri.startsWith('/admin/marcas')} ? ' active fw-bold' : ''">
+                        <i class="bi bi-tag me-1"></i>Marcas
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:href="@{/admin/categorias}"
+                       th:classappend="${currentUri.startsWith('/admin/categorias')} ? ' active fw-bold' : ''">
+                        <i class="bi bi-grid me-1"></i>Categorías
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:href="@{/admin/productos}"
+                       th:classappend="${currentUri.startsWith('/admin/productos')} ? ' active fw-bold' : ''">
+                        <i class="bi bi-box-seam me-1"></i>Productos
+                    </a>
+                </li>
+            </ul>
+            <a th:href="@{/}" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-arrow-left me-1"></i>Volver a la tienda
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- FRAGMENTO PIÉ -->
+<footer th:fragment="footer" class="bg-secondary text-white text-center py-3 mt-5">
+    <small>Panel de administración &mdash; <span th:text="${appName}">Tienda</span></small>
+</footer>
+
+</body>
+</html>
