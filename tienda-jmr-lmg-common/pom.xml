@@ -43,11 +43,5 @@
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>es.iesclaradelrey.da2d1a.tienda-jmr-lmg</groupId>
-            <artifactId>tienda-jmr-lmg-web</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 </project>
