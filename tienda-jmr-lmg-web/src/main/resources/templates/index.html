@@ -6,7 +6,13 @@
 
 <main>
 
-    <!-- HERO -->
+    <div class="container mt-3" th:if="${param.logout}">
+        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" role="alert">
+            <i class="bi bi-door-closed-fill me-2"></i>Has cerrado sesión correctamente. ¡Hasta pronto!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+
     <div class="bg-dark text-white py-5">
         <div class="container py-4">
             <div class="row align-items-center">
@@ -19,7 +25,7 @@
                         Encuentra la pieza perfecta para tu colección.
                     </p>
                     <div class="d-flex gap-3 flex-wrap">
-                        <a th:href="@{/catalogo}" class="btn btn-info btn-lg px-4">Ver Catálogo</a>
+                        <a th:href="@{/catalogo}" class="btn btn-info btn-lg px-4 text-white fw-bold">Ver Catálogo</a>
                         <a th:href="@{/categorias}" class="btn btn-outline-light btn-lg px-4">Explorar Categorías</a>
                     </div>
                 </div>
@@ -41,7 +47,6 @@
         </div>
     </div>
 
-    <!-- OFERTAS -->
     <div class="container my-5" th:if="${not #lists.isEmpty(gruposOfertas)}">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="border-start border-info border-4 ps-3 mb-0">Ofertas destacadas</h2>
@@ -51,7 +56,6 @@
 
         <div id="carruselOfertas" class="carousel slide" data-bs-ride="carousel">
 
-            <!-- Indicadores -->
             <div class="carousel-indicators">
                 <button th:each="grupo, iterStat : ${gruposOfertas}"
                         type="button"
@@ -62,7 +66,6 @@
                 </button>
             </div>
 
-            <!-- Slides -->
             <div class="carousel-inner rounded shadow-sm">
                 <div th:each="grupo, iterStat : ${gruposOfertas}"
                      class="carousel-item"
@@ -89,7 +92,7 @@
                                         <span class="fs-5 fw-bold text-success d-block"
                                               th:text="${#numbers.formatDecimal(p.getPrecioFinal(), 1, 2)} + ' €'"></span>
                                         <a th:href="@{/productos/{id}(id=${p.id})}"
-                                           class="btn btn-info btn-sm w-100 mt-2">Ver producto</a>
+                                           class="btn btn-info text-white fw-bold btn-sm w-100 mt-2">Ver producto</a>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +101,6 @@
                 </div>
             </div>
 
-            <!-- Controles -->
             <button class="carousel-control-prev" type="button"
                     data-bs-target="#carruselOfertas" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -112,7 +114,6 @@
         </div>
     </div>
 
-    <!-- BANNER CTA -->
     <div class="bg-info bg-opacity-10 border-top border-bottom border-info py-5 mt-3">
         <div class="container text-center">
             <h3 class="fw-bold mb-2">¿No sabes por dónde empezar?</h3>
