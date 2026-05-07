@@ -70,14 +70,21 @@ INSERT INTO productos_categorias (id_producto, id_categoria) VALUES
      (36,1), (37,4), (38,5), (39,4), (12, 4), (18, 4),
      (22, 1), (14, 1);
 
--- el usuario administrador inicial:
-INSERT INTO usuarios (nombre, apellidos, email, telefono, fecha_nacimiento, password, fecha_registro)
-VALUES (
-'Admin',
-'Administrador',
-'admin@tienda.com',
-NULL,
-NULL,
-'$2a$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-CURRENT_TIMESTAMP
-       );
+-- Insertar roles
+INSERT INTO roles (id, descripcion) VALUES ('USER', 'Usuario normal');
+INSERT INTO roles (id, descripcion) VALUES ('ADMIN', 'Administrador');
+
+-- Insertar usuario administrador
+INSERT INTO usuarios (nombre, apellidos, email, telefono, fecha_nacimiento, password, fecha_registro) VALUES (
+    'Admin',
+    'Administrador',
+    'admin@tienda.com',
+    NULL,
+    NULL,
+    '$2a$12$8/pc9ouElj8rx0hy9WyH/OFS6sYAB0KbnbS1kj8LmUJXAPgJd9lMy',
+    CURRENT_TIMESTAMP
+);
+
+-- Se asigna ambos roles al administrador
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (1, 'ADMIN');
+INSERT INTO usuarios_roles (id_usuario, id_rol) VALUES (1, 'USER');

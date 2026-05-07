@@ -7,13 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "usuarios")
-public class UsuarioRegistrado {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,4 +41,13 @@ public class UsuarioRegistrado {
 
     @Column(nullable = false)
     private LocalDateTime fechaRegistro;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "usuarios_roles",
+        joinColumns = @JoinColumn(name = "id_usuario"),
+        inverseJoinColumns = @JoinColumn(name = "id_rol"),
+        uniqueConstraints = @UniqueConstraint(columnNames = {"id_usuario", "id_rol"})
+    )
+    private Set<Rol> roles = new HashSet<>();
 }
