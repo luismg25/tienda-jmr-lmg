@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tienda-jmr-lmg-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tienda-jmr-lmg-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tienda-jmr-lmg-security/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/tienda-jmr-lmg-web/src/main/java" charset="UTF-8" />
   </component>
 </project>

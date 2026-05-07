@@ -3,6 +3,11 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+      </profile>
       <profile name="Annotation profile for tienda-jmr-lmg" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -12,6 +17,7 @@
         </processorPath>
         <module name="tienda-jmr-lmg-web" />
         <module name="tienda-jmr-lmg-common" />
+        <module name="tienda-jmr-lmg-security" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,6 +30,7 @@
       <module name="tienda-jmr-lmg" options="-parameters" />
       <module name="tienda-jmr-lmg-common" options="-parameters" />
       <module name="tienda-jmr-lmg-fgg-web" options="-parameters" />
+      <module name="tienda-jmr-lmg-security" options="-parameters" />
       <module name="tienda-jmr-lmg-web" options="-parameters" />
     </option>
   </component>
