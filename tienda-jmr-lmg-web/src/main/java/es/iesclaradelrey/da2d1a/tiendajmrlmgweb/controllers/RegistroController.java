@@ -1,6 +1,6 @@
 package es.iesclaradelrey.da2d1a.tiendajmrlmgweb.controllers;
 
-import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.entities.UsuarioRegistrado;
+import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.entities.Usuario;
 import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.services.UsuarioService;
 import es.iesclaradelrey.da2d1a.tiendajmrlmgweb.dto.RegistroDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,7 +41,7 @@ public class RegistroController {
         }
 
         try {
-            UsuarioRegistrado nuevo = new UsuarioRegistrado();
+            Usuario nuevo = new Usuario();
             nuevo.setNombre(registroDTO.getNombre());
             nuevo.setApellidos(registroDTO.getApellidos());
             nuevo.setEmail(registroDTO.getEmail());

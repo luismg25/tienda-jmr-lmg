@@ -1,18 +1,24 @@
 package es.iesclaradelrey.da2d1a.tiendajmrlmgsecurity;
 
-import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.entities.UsuarioRegistrado;
+import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.entities.Usuario;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UsuarioDetails implements UserDetails {
 
-    private final UsuarioRegistrado usuario;
+    private final Usuario usuario;
 
-    public UsuarioDetails(UsuarioRegistrado usuario) {
+    public UsuarioDetails(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Long getId() {
+        return usuario.getId();
     }
 
     @Override
@@ -27,7 +33,9 @@ public class UsuarioDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return usuario.getRoles().stream()
+            .map(rol -> new SimpleGrantedAuthority("ROLE_" + rol.getId()))
+            .collect(Collectors.toList());
     }
 
     // Estos métodos devuelven true para que la cuenta esté activa
@@ -37,7 +45,7 @@ public class UsuarioDetails implements UserDetails {
     @Override public boolean isEnabled() { return true; }
 
     // Getter para acceder al usuario desde thymeleaf
-    public UsuarioRegistrado getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 }
