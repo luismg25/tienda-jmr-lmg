@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!-- FRAGMENTO CABEZA -->
 <head th:fragment="head(title)">
@@ -33,6 +34,29 @@
                     <a class="nav-link" th:href="@{/catalogo}" th:classappend="${currentUri == '/catalogo'} ? ' active-nav' : ''">Catálogo</a>
                 </li>
             </ul>
+            <!--Zona de autenticacion -->
+            <div class="ms-3 d-flex align-items-center gap-2">
+                <!-- si el usuario esta autenticado -->
+                <div sec:authorize="isAuthenticated()" class="d-flex align-items-center gap-2">
+            <span class="text-white-50 small">
+                <i class="bi bi-person-circle me-1"></i>
+                <span sec:authentication="name"></span>
+            </span>
+                    <!-- Logout como formulario POST y con requisito de seguridad CSRF -->
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-outline-light btn-sm">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Si el usuario NO está autenticado -->
+                <div sec:authorize="isAnonymous()" class="d-flex gap-2">
+                    <a th:href="@{/login}" class="btn btn-outline-info btn-sm">Iniciar sesión</a>
+                    <a th:href="@{/register}" class="btn btn-info btn-sm">Registrarse</a>
+                </div>
+
+            </div>
         </div>
     </div>
 </nav>

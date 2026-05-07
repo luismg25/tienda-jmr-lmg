@@ -70,3 +70,14 @@ INSERT INTO productos_categorias (id_producto, id_categoria) VALUES
      (36,1), (37,4), (38,5), (39,4), (12, 4), (18, 4),
      (22, 1), (14, 1);
 
+-- el usuario administrador inicial:
+INSERT INTO usuarios (nombre, apellidos, email, telefono, fecha_nacimiento, password, fecha_registro)
+VALUES (
+           'Admin',
+           'Administrador',
+           'admin@tienda.com',
+           NULL,
+           NULL,
+           '$2a$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+           CURRENT_TIMESTAMP
+       );
