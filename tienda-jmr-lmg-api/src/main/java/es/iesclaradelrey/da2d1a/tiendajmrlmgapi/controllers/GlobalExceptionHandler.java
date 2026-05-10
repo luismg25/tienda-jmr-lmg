@@ -21,6 +21,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problemDetail;
     }
 
+    @ExceptionHandler({MarcaNotFoundException.class, CategoriaNotFoundException.class})
+    public ProblemDetail handleEntityNotFound(RuntimeException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        problemDetail.setTitle("Entidad no encontrada para importación");
+        return problemDetail;
+    }
+
     @ExceptionHandler(StockInsuficienteException.class)
     public ProblemDetail handleStockInsuficiente(StockInsuficienteException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());

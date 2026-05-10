@@ -1,11 +1,12 @@
 package es.iesclaradelrey.da2d1a.tiendajmrlmgapi.sax;
 
+import es.iesclaradelrey.da2d1a.tiendajmrlmgapi.exceptions.CategoriaNotFoundException;
+import es.iesclaradelrey.da2d1a.tiendajmrlmgapi.exceptions.MarcaNotFoundException;
 import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.entities.Categoria;
 import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.entities.Marca;
 import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.entities.Producto;
 import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.repositories.CategoriaRepository;
 import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.repositories.MarcaRepository;
-import es.iesclaradelrey.da2d1a.tiendajmrlmgapi.exceptions.ProductoNotFoundException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -56,11 +57,11 @@ public class ProductoSAXHandler extends DefaultHandler {
             case "precio" -> productoActual.setPrecio(new BigDecimal(texto));
             case "stock" -> productoActual.setStock(Integer.parseInt(texto));
             case "marca" -> {
-                Marca marca = marcaRepository.findByNombre(texto).orElseThrow(() -> new RuntimeException("MARCA_NOT_FOUND:" + texto));
+                Marca marca = marcaRepository.findByNombre(texto).orElseThrow(() -> new MarcaNotFoundException(texto));
                 productoActual.setMarca(marca);
             }
             case "categoria" -> {
-                Categoria cat = categoriaRepository.findByNombre(texto).orElseThrow(() -> new RuntimeException("CATEGORIA_NOT_FOUND:" + texto));
+                Categoria cat = categoriaRepository.findByNombre(texto).orElseThrow(() -> new CategoriaNotFoundException(texto));
                 productoActual.getCategorias().add(cat);
             }
             case "producto" -> {
