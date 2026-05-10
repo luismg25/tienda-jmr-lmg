@@ -28,9 +28,9 @@ public class Producto {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "productos_categorias",
-            joinColumns = @JoinColumn(name = "id_producto"),
-            inverseJoinColumns = @JoinColumn(name = "id_categoria")
+        name = "productos_categorias",
+        joinColumns = @JoinColumn(name = "id_producto"),
+        inverseJoinColumns = @JoinColumn(name = "id_categoria")
     )
     private List<Categoria> categorias = new ArrayList<>();
 
