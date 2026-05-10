@@ -35,6 +35,7 @@
         <module>tienda-jmr-lmg-common</module>
         <module>tienda-jmr-lmg-security</module>
         <module>tienda-jmr-lmg-web</module>
+        <module>tienda-jmr-lmg-api</module>
     </modules>
 
     <dependencies>
