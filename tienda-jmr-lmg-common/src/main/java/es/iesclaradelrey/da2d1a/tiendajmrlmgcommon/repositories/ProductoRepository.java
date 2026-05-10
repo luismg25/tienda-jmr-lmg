@@ -12,5 +12,4 @@ import java.util.List;
 public interface ProductoRepository extends JpaRepository<Producto, Long>, JpaSpecificationExecutor<Producto> {
     //consulta derivada por categoría con parámetro Sort
     List<Producto> findByCategorias_Id(Long categoriaId, Sort sort);
-
 }

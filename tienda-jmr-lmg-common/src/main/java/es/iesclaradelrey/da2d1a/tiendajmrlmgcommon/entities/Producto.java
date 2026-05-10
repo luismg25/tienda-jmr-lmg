@@ -40,6 +40,9 @@ public class Producto {
     @Column(name = "descuento")
     private Integer descuento;
 
+    @Column(nullable = false)
+    private Integer stock = 0;
+
     private boolean agotado;
 
     @Column(length = 100)

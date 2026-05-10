@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/tienda-jmr-lmg-api/tienda-jmr-lmg-api.iml" filepath="$PROJECT_DIR$/tienda-jmr-lmg-api/tienda-jmr-lmg-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/tienda-jmr-lmg-common/tienda-jmr-lmg-common.iml" filepath="$PROJECT_DIR$/tienda-jmr-lmg-common/tienda-jmr-lmg-common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tienda-jmr-lmg-security/tienda-jmr-lmg-security.iml" filepath="$PROJECT_DIR$/tienda-jmr-lmg-security/tienda-jmr-lmg-security.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tienda-jmr-lmg-web/tienda-jmr-lmg-web.iml" filepath="$PROJECT_DIR$/tienda-jmr-lmg-web/tienda-jmr-lmg-web.iml" />
     </modules>
   </component>
 </project>
