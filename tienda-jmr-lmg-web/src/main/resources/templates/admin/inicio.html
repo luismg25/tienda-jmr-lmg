@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/layout :: head('Panel de administración')}"><title>Admin</title></head>
+<body class="bg-light">
+<nav th:replace="~{admin/layout :: navbar}"></nav>
+
+<div class="container mt-5 mb-5">
+    <div class="text-center mb-5">
+        <i class="bi bi-shield-lock display-1 text-secondary"></i>
+        <h1 class="mt-3 fw-bold">Panel de administración</h1>
+        <p class="text-muted fs-5">Selecciona una sección para gestionar su contenido.</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+
+        <div class="col-md-4">
+            <a th:href="@{/admin/marcas}" class="text-decoration-none">
+                <div class="card shadow-sm border-0 text-center p-4 h-100 admin-card">
+                    <div class="card-body">
+                        <i class="bi bi-tag display-4 text-primary mb-3"></i>
+                        <h4 class="fw-bold">Marcas</h4>
+                        <p class="text-muted">Crear, editar y eliminar marcas de productos.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a th:href="@{/admin/categorias}" class="text-decoration-none">
+                <div class="card shadow-sm border-0 text-center p-4 h-100 admin-card">
+                    <div class="card-body">
+                        <i class="bi bi-grid display-4 text-success mb-3"></i>
+                        <h4 class="fw-bold">Categorías</h4>
+                        <p class="text-muted">Gestionar las categorías del catálogo.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a th:href="@{/admin/productos}" class="text-decoration-none">
+                <div class="card shadow-sm border-0 text-center p-4 h-100 admin-card">
+                    <div class="card-body">
+                        <i class="bi bi-box-seam display-4 text-warning mb-3"></i>
+                        <h4 class="fw-bold">Productos</h4>
+                        <p class="text-muted">Añadir, modificar y eliminar productos.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .admin-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+    }
+    .admin-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12) !important;
+    }
+</style>
+
+<footer th:replace="~{admin/layout :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

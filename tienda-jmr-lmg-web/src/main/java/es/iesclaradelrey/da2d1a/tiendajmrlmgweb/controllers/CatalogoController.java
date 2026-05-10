@@ -1,6 +1,6 @@
 package es.iesclaradelrey.da2d1a.tiendajmrlmgweb.controllers;
 
-import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.entities.Producto;
+import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.services.MarcaService;
 import es.iesclaradelrey.da2d1a.tiendajmrlmgcommon.services.ProductoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +14,16 @@ import java.util.List;
 @RequestMapping("/catalogo")
 public class CatalogoController {
 
-    private final ProductoService productoService;
+    private static final List<String> CAMPOS_ORDENACION = List.of(
+            "id", "nombre", "origen", "precio", "marca.nombre", "agotado", "descuento"
+    );
 
-    public CatalogoController(ProductoService ps) {
-        this.productoService = ps;
+    private final ProductoService productoService;
+    private final MarcaService marcaService;
+
+    public CatalogoController(ProductoService productoService, MarcaService marcaService) {
+        this.productoService = productoService;
+        this.marcaService = marcaService;
     }
 
     @GetMapping
@@ -31,15 +37,13 @@ public class CatalogoController {
             @RequestParam(defaultValue = "asc") String sortDir,
             Model model) {
 
-        List<String> camposPermitidos = List.of("id", "nombre", "origen", "precio", "marca.nombre", "agotado", "descuento");
-        String safeSortField = camposPermitidos.contains(sortField) ? sortField : "nombre";
-        List<Producto> productos = productoService.buscarConFiltros(nombre, origen, minPrecio, maxPrecio, safeSortField, sortDir);
-        if (marcaId != null) productos = productos.stream().filter(p -> p.getMarca().getId().equals(marcaId)).toList();
-        var marcasUnicas = productos.stream().map(Producto::getMarca).distinct().toList();
+        String safeSortField = CAMPOS_ORDENACION.contains(sortField) ? sortField : "nombre";
 
-        model.addAttribute("productos", productos);
+        model.addAttribute("productos", productoService.buscarConFiltros(nombre, marcaId, origen, minPrecio, maxPrecio, safeSortField, sortDir));
+        model.addAttribute("marcas", marcaService.findAll());
         model.addAttribute("nombre", nombre);
         model.addAttribute("origen", origen);
+        model.addAttribute("marcaId", marcaId);
         model.addAttribute("minPrecio", minPrecio);
         model.addAttribute("maxPrecio", maxPrecio);
         model.addAttribute("sortField", safeSortField);

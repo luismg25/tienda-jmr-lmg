@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
     private final CategoriaRepository categoriaRepository;//Guarda el repositorio
@@ -17,7 +18,6 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public List<Categoria> findAll() {
         return categoriaRepository.findAll();
-        //El servicio aqui pregunta al repositorio
     }
 
     @Override
@@ -29,4 +29,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     public Categoria save(Categoria categoria) {
         return categoriaRepository.save(categoria);
     }
+
+    @Override
+    public void deleteById(Long id) { categoriaRepository.deleteById(id); }
 }

@@ -3,15 +3,32 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+      </profile>
+      <profile name="Annotation profile for tienda-jmr-lmg-api" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
+        </processorPath>
+        <module name="tienda-jmr-lmg-api" />
+      </profile>
       <profile name="Annotation profile for tienda-jmr-lmg" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.44/lombok-1.18.44.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.44/lombok-1.18.44.jar" />
         </processorPath>
         <module name="tienda-jmr-lmg-web" />
         <module name="tienda-jmr-lmg-common" />
+        <module name="tienda-jmr-lmg-security" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -22,8 +39,10 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="tienda-jmr-lmg" options="-parameters" />
+      <module name="tienda-jmr-lmg-api" options="-parameters" />
       <module name="tienda-jmr-lmg-common" options="-parameters" />
       <module name="tienda-jmr-lmg-fgg-web" options="-parameters" />
+      <module name="tienda-jmr-lmg-security" options="-parameters" />
       <module name="tienda-jmr-lmg-web" options="-parameters" />
     </option>
   </component>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!-- FRAGMENTO CABEZA -->
 <head th:fragment="head(title)">
@@ -24,15 +24,39 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Inicio</a>
+                    <a class="nav-link" th:href="@{/}" th:classappend="${currentUri == '/'} ? ' active-nav' : ''">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/categorias}">Categorías</a>
+                    <a class="nav-link" th:href="@{/categorias}" th:classappend="${currentUri == '/categorias'} ? ' active-nav' : ''">Categorías</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/catalogo}">Catálogo</a>
+                    <a class="nav-link" th:href="@{/catalogo}" th:classappend="${currentUri == '/catalogo'} ? ' active-nav' : ''">Catálogo</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link text-warning" th:href="@{/admin}" th:classappend="${currentUri.startsWith('/admin')} ? ' active-nav' : ''">Administración</a>
                 </li>
             </ul>
+
+            <div class="ms-3 d-flex align-items-center gap-2">
+                <div sec:authorize="isAuthenticated()" class="d-flex align-items-center gap-2">
+                    <a th:href="@{/users/profile}" class="text-white-50 small text-decoration-none me-2" title="Ver mi perfil">
+                        <i class="bi bi-person-circle me-1"></i>
+                        <span sec:authentication="name"></span>
+                    </a>
+
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-outline-light btn-sm">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </div>
+
+                <div sec:authorize="isAnonymous()" class="d-flex gap-2">
+                    <a th:href="@{/login}" class="btn btn-outline-info btn-sm">Iniciar sesión</a>
+                    <a th:href="@{/register}" class="btn btn-info btn-sm">Registrarse</a>
+                </div>
+
+            </div>
         </div>
     </div>
 </nav>

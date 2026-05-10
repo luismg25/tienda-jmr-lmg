@@ -6,6 +6,8 @@
       <list>
         <option value="$PROJECT_DIR$/tienda-jmr-lmg-fgg-common/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/tienda-jmr-lmg-security/pom.xml" />
+        <option value="$PROJECT_DIR$/tienda-jmr-lmg-api/pom.xml" />
       </list>
     </option>
   </component>
